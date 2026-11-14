@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sys — CTRL & CTRL.LER — STATION sys</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#02060a;color:#eafcff;font-family:ui-monospace,Menlo,Consolas,monospace;padding:20px}
+h1{color:#ff66c8;letter-spacing:2px;margin:0}.sub{color:#b388ff;margin:6px 0 18px}
+.grid{display:grid;gap:12px}.mid{grid-template-columns:repeat(3,1fr)}
+.ctrl{border:2px solid #ff66c8;padding:16px;border-radius:14px;margin-bottom:14px;background:#1a0714}
+.card{border:1px solid #1e3a44;background:#07131a;padding:14px;border-radius:12px}.card b{color:#ff66c8;font-size:18px}
+.card.active{border-color:#ff66c8;box-shadow:0 0 18px #ff66c866}
+.card .txt{margin:8px 0;white-space:pre-wrap}
+.btns{display:flex;gap:6px;flex-wrap:wrap}button{background:#ff66c8;color:#02060a;border:0;padding:10px 12px;border-radius:8px;font-weight:800;cursor:pointer;font-size:12px}
+button.ghost{background:transparent;color:#ff66c8;border:1px solid #ff66c8}
+#out,#run{border:1px dashed #ff66c8;padding:14px;border-radius:12px;margin-top:14px;white-space:pre-wrap;min-height:60px}
+a{color:#ff66c8}small{color:#9ad}
+@media(max-width:700px){.mid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>sys — CTRL & CTRL.LER</h1><div class="sub">sys = Zentrale, Befehl + Justierung · Klein zum Index, nicht Commander · Ein Roll, einzeln, dann zurück</div>
+
+<div class="ctrl"><b>CTRL — EINZELLAUF</b><br><small>Ganzes OS nur für EINEN Roll. Nicht alle auf einmal. Ein Roll, sauber. Dann zurück.</small><br><br>
+<div>Gewählter Roll: <b id="chosen">— keiner —</b></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+<button onclick="startRun()">▶ START EINZELLAUF</button>
+<button class="ghost" onclick="stopRun()">■ STOP — ZURÜCK ZUR ZENTRALE</button>
+<button class="ghost" onclick="learn()">📓 CTRL.LER — WAS HAT ER GELERNT?</button>
+</div>
+<div id="run">CTRL bereit. Wähl einen Roll unten. CTRL.LER merkt sich den letzten Roll.</div>
+</div>
+
+
+<div style="border:2px solid #5cf0ff;padding:16px;border-radius:14px;margin-bottom:14px;background:#07131a">
+<b style="color:#5cf0ff">🤝 KOOP + TEAM — VERTRAUENS-RECHNER — UNENDLICHKEIT GEZÄHMT</b><br>
+<small>Koop funktioniert nur, wenn eine Seite mehr vertraut. D ≠ 0 = Bewegung. D = 0 = Stillstand.<br>
+Unendlichkeit ist gezähmt: nur endlich + unendlich, so weit wie wir es zulassen. 729 = endlich, Welt. 756+ = Überlauf.</small><br><br>
+<label>A vertraut (0-1000) <input id="ta" type="number" value="60" style="width:100%;background:#02060a;border:1px solid #274b57;color:#fff;padding:8px;border-radius:8px"></label>
+<label>B vertraut (0-1000) <input id="tb" type="number" value="30" style="width:100%;background:#02060a;border:1px solid #274b57;color:#fff;padding:8px;border-radius:8px"></label>
+<label>Unendlichkeit zulassen bis (Limit) <input id="infLimit" type="number" value="729" style="width:100%;background:#02060a;border:1px solid #274b57;color:#fff;padding:8px;border-radius:8px"></label>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+<button onclick="koopCalc()" style="background:#5cf0ff">▶ KOOP PRÜFEN</button>
+<button class="ghost" onclick="infCalc()" style="color:#5cf0ff;border-color:#5cf0ff">∞ UNENDLICHKEIT ZÄHMEN</button>
+</div>
+<div id="koopOut" style="margin-top:12px;white-space:pre-wrap"></div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+<button onclick="addCard()">+ NEUEN ROLL ADDEN</button>
+<button class="ghost" onclick="exportAll()">↓ ALLES ALS TEXT</button>
+</div>
+<div id="cards" class="grid mid"><div class="card" data-role="B"><b>B — BÜHNE · SCHRAUBE</b><div class="txt">Berlin, Bühne, Schraube hält
+→ B/</div><div class="btns"><button onclick="selectRole('B')">◉ DIESEN ROLL WÄHLEN</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-role="D"><b>D — DREHEN · FALL + TOOL</b><div class="txt">Fall dreht + Tool dreht
+→ D/</div><div class="btns"><button onclick="selectRole('D')">◉ DIESEN ROLL WÄHLEN</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-role="H"><b>H — HALT · MONITOR</b><div class="txt">Monitor hält, HELL beaufsichtigt
+→ H/</div><div class="btns"><button onclick="selectRole('H')">◉ DIESEN ROLL WÄHLEN</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-role="O"><b>O — ORBIT · PIPELINE ORGANIZER</b><div class="txt">Welle kreist, Pipeline ordnet, Mi Ka Do
+→ O/</div><div class="btns"><button onclick="selectRole('O')">◉ DIESEN ROLL WÄHLEN</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-role="S"><b>S — SONNE · WURZEL · WERT</b><div class="txt">Wurzel braucht Licht, Wert-Arbeit
+→ S/</div><div class="btns"><button onclick="selectRole('S')">◉ DIESEN ROLL WÄHLEN</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-role="T"><b>T — TAFEL · MAINBOARD</b><div class="txt">Mainboard wird lesbar, 8 Module
+→ T/</div><div class="btns"><button onclick="selectRole('T')">◉ DIESEN ROLL WÄHLEN</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-role="sys"><b>sys — ZENTRALE · BEFEHL + JUSTIERUNG</b><div class="txt">Befehl + Justierung, Ebene 321
+→ ../sys.zo.om.html</div><div class="btns"><button onclick="selectRole('sys')">◉ DIESEN ROLL WÄHLEN</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div></div>
+<div id="out">Alle Rollen sind editierbar. sys ist klein zum Index. Commander wäre zu groß.</div>
+<footer style="margin-top:16px;color:#8aa;font-size:13px">Zentrale: <a href="../sys.zo.om.html">sys.zo.om.html</a> · Bühne: <a href="../B/">B/</a> · Drehen: <a href="../D/">D/</a> · Halt: <a href="../H/">H/</a> · Organizer: <a href="../O/">O/</a> · Sonne: <a href="../S/">S/</a> · Tafel: <a href="../T/">T/</a></footer>
+<script>
+let chosen=null, running=false, last=null;
+const links={'B':'B/','D':'D/','H':'H/','O':'O/','S':'S/','T':'T/','sys':'../sys.zo.om.html'};
+const notes={'B':'Bühne hält. Schraube sitzt.','D':'Fall gedreht, Tool gedreht, geprüft.','H':'Gehalten. Monitor hat alles gesehen.','O':'Geordnet. Pipeline einmal rum. Mi Ka Do gemacht.','S':'Gewertet. Umgewertet. Wurzel steht.','T':'Tafel lesbar. 8 Module auf dem Platz.','sys':'Zentrale hat befohlen + justiert. Ebene 321.'};
+function selectRole(r){ chosen=r; document.getElementById('chosen').textContent=r; document.querySelectorAll('.card').forEach(c=>c.classList.toggle('active', c.dataset.role===r)); document.getElementById('run').textContent='CTRL: Roll '+r+' gewählt. Bereit für START EINZELLAUF.'; }
+function startRun(){ if(!chosen){ document.getElementById('run').textContent='CTRL: Erst einen Roll wählen.'; return; } running=true; last=chosen; try{localStorage.setItem('syszoom_ctrl_last', chosen)}catch(e){} document.getElementById('run').textContent='▶ EINZELLAUF LÄUFT: Ganzes OS nur für Roll '+chosen+'.\nAlle anderen warten.\n\nZum Roll gehen: '+links[chosen]+'\nZum Beenden: STOP — ZURÜCK ZUR ZENTRALE.'; }
+function stopRun(){ if(!running){ document.getElementById('run').textContent='CTRL: Kein Einzellauf läuft. Du bist in der Zentrale.'; return; } running=false; document.getElementById('run').textContent='■ STOP — ZURÜCK ZUR ZENTRALE. Roll '+last+' ist fertig. CTRL.LER hat sich gemerkt: '+last+'.'; }
+function learn(){ let l=last; try{l=l||localStorage.getItem('syszoom_ctrl_last')}catch(e){} if(!l){document.getElementById('out').textContent='CTRL.LER: Noch kein Roll gelaufen. Noch nichts gelernt.'; return;} document.getElementById('out').textContent='📓 CTRL.LER — LETZTER ROLL: '+l+'\nGelernt: '+(notes[l]||'')+'\n\nCTRL.LER heißt: Controller, der mitlernt. Jeder Einzellauf macht den nächsten besser.'; }
+
+function koopCalc(){ const A=Number(document.getElementById('ta').value), B=Number(document.getElementById('tb').value);
+ const D=A-B, Q=(A+B)/2, F=Q/40;
+ let res = 'A='+A+'  B='+B+'\nD = A-B = '+D+'\nQ = (A+B)/2 = '+Q+'\nF = Q/40 = '+F.toFixed(2)+'\n\n';
+ if(D===0) res += '⛔ STILLSTAND — D=0. Beide warten. Keiner zieht. Koop tot.';
+ else if(D>0) res += '✅ KOOP LÄUFT — D>0. A vertraut mehr, A zieht zuerst. B kann prüfen.';
+ else res += '✅ KOOP LÄUFT — D<0. B vertraut mehr, B zieht zuerst. A kann prüfen.';
+ res += '\n\nWelt-Check: 729 = endlich, Welt. 756+ = Überlauf. Q='+Q+(Q>729?' → ÜBER WELT — wird gezähmt.':Q>756?' → ÜBERLAUF.':' — in der Welt.');
+ document.getElementById('koopOut').textContent=res; }
+function infCalc(){ const L=Number(document.getElementById('infLimit').value);
+ let t='∞ UNENDLICHKEIT GEZÄHMT\nZugelassen bis: '+L+'\n\n729 = endlich, Welt.\n756 und später = Überlauf.\n\nRegel: Unendlichkeit ist nur endlich + unendlich, so weit wie WIR es zulassen.\nWir lassen zu bis '+L+'. Darüber: STOP. Überlauf. Nicht weiter.\n\nD.h.: Wir spielen nicht gegen Unendlichkeit. Wir spielen mit gezähmter Unendlichkeit.';
+ if(L>756) t+='\n\n⚠️ Dein Limit '+L+' ist über 756 — das ist schon Überlauf. Zähme es zurück auf ≤729, wenn du in der Welt bleiben willst.';
+ else if(L===729) t+='\n\n✅ Genau Welt. 729. Endlich. Sauber.';
+ document.getElementById('koopOut').textContent=t; }
+function addCard(){ const t=prompt('Neuer Roll — Name:','NEU'); if(t===null) return; const x=prompt('Was kann der Roll?',''); const w=document.getElementById('cards'); const el=document.createElement('div'); el.className='card'; el.dataset.role=t; el.innerHTML='<b></b><div class="txt"></div><div class="btns"><button onclick="selectRole(\''+t+'\')">◉ DIESEN ROLL WÄHLEN</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div>'; el.querySelector('b').innerText=t; el.querySelector('.txt').innerText=x||''; w.appendChild(el); }
+function editCard(b){ const c=b.closest('.card'); const t=prompt('Roll bearbeiten:', c.querySelector('b').innerText); if(t===null) return; const x=prompt('Text bearbeiten:', c.querySelector('.txt').innerText); if(x===null) return; c.querySelector('b').innerText=t; c.querySelector('.txt').innerText=x; }
+function exportAll(){ const d=[...document.querySelectorAll('#cards .card')].map(c=>c.querySelector('b').innerText+'\n'+c.querySelector('.txt').innerText).join('\n\n---\n\n'); document.getElementById('out').textContent='EXPORT — Station sys / CTRL:\n\n'+d; }
+try{ const l=localStorage.getItem('syszoom_ctrl_last'); if(l) document.getElementById('run').textContent='CTRL.LER erinnert: Letzter Roll war '+l+'. Bereit für nächsten Einzellauf.'; }catch(e){}
+</script></body></html>
