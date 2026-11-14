@@ -1,46 +1,62 @@
 <!doctype html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>H — HALT · MONITOR — STATION H</title>
+<title>O — ORGANIZER · MI KA DO — STATION O</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#02060a;color:#eafcff;font-family:ui-monospace,Menlo,Consolas,monospace;padding:20px}
-h1{color:#8cf0d0;letter-spacing:2px;margin:0}.sub{color:#b388ff;margin:6px 0 18px}
+h1{color:#f0d080;letter-spacing:2px;margin:0}.sub{color:#b388ff;margin:6px 0 18px}
 .grid{display:grid;gap:12px}.mid{grid-template-columns:repeat(3,1fr)}
-.card{border:1px solid #1e3a44;background:#07131a;padding:14px;border-radius:12px}.card b{color:#8cf0d0;font-size:18px}
+.card{border:1px solid #1e3a44;background:#07131a;padding:14px;border-radius:12px}.card b{color:#f0d080;font-size:18px}
 .card .txt{margin:8px 0;white-space:pre-wrap}
-.btns{display:flex;gap:6px;flex-wrap:wrap}button{background:#8cf0d0;color:#02060a;border:0;padding:8px 10px;border-radius:8px;font-weight:800;cursor:pointer;font-size:12px}
-button.ghost{background:transparent;color:#8cf0d0;border:1px solid #8cf0d0}
-#out{border:1px dashed #8cf0d0;padding:14px;border-radius:12px;margin-top:14px;white-space:pre-wrap;min-height:60px}
-#mon{border:1px solid #8cf0d0;padding:14px;border-radius:12px;margin-top:14px}
-a{color:#8cf0d0}small{color:#9ad}
+.btns{display:flex;gap:6px;flex-wrap:wrap}button{background:#f0d080;color:#02060a;border:0;padding:8px 10px;border-radius:8px;font-weight:800;cursor:pointer;font-size:12px}
+button.ghost{background:transparent;color:#f0d080;border:1px solid #f0d080}
+#out,#snack{border:1px dashed #f0d080;padding:14px;border-radius:12px;margin-top:14px;white-space:pre-wrap;min-height:60px}
+a{color:#f0d080}small{color:#9ad}
 @media(max-width:700px){.mid{grid-template-columns:1fr}}
 </style></head><body>
-<h1>H — HALT · MONITOR</h1><div class="sub">H = Halt, Monitor hält · Eigener Index als eigene Station · Ordner-Repo im großen Repo</div>
+<h1>O — ORGANIZER · MI KA DO</h1><div class="sub">O = Orbit, Welle kreist · O = Organizer · Eigener Index als eigene Station · Ordner-Repo im großen Repo</div>
 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
 <button onclick="addCard()">+ NEUEN EINTRAG ADDEN</button>
 <button class="ghost" onclick="resetAll()">↺ ALLES ZURÜCKSETZEN</button>
 <button class="ghost" onclick="exportAll()">↓ ALLES ALS TEXT</button>
-<button class="ghost" onclick="monitor()">◉ MONITOR: ALLES PRÜFEN</button>
+<button onclick="snack()">🍿 MI KA DO — SNACK + LACHEN</button>
+<button class="ghost" onclick="ordnen()">⟳ ORDNEN — EINE WELLE</button>
 </div>
-<div id="cards" class="grid mid"><div class="card"><b>H — MONITOR</b><div class="txt">MONITOR SAM PRISMATICUM 1 BIO TEL ADD
-H = Halt, Monitor hält
-Diese Station hält. Sie rennt nicht. Sie sieht.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>H — HALT</b><div class="txt">H = HALT — Stabilität / ZEN
-Farbe: #8cf0d0 grün
-HALT = ZIEL · HALT = OFFEN bis gemessen</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>H — HELL BEAUFSICHTIGT</b><div class="txt">HELL: SEHEN · ZEIGEN (nur 4) · BEAUFSICHTIGEN
-HELL beaufsichtigt HÖLLE — HÖLLE auf Sicht.
-Nichts im Dunkeln.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>SAM — DREIECK-AUGE</b><div class="txt">SAM prüft als Dreieck-Auge.
-Was SAM sieht, wird gezeigt. Was SAM nicht sieht, wird nicht behauptet.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>PRISMATIKUM</b><div class="txt">PRISMATIKUM — Feld C3-F6 — brechen
-Tie-Break: Bei Gleichstand gewinnt PRISMATIKUM.
-Licht wird gebrochen, nicht geglättet.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>BIO — TEL — ADD</b><div class="txt">BIO: Leben, Körper, Wurzel
-TEL: Kontakt, Ruf, Verbindung
-ADD: Hinzufügen — jede Station kann mehr.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>HBT — CODEC</b><div class="txt">H = HALT · B = BASIS · T = TIEFE
-Q = (H+B+T)/3 · F = Q/40 · D = 3 Ebenen
-HOME = 40</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>H — ZEUGNIS</b><div class="txt">Zeugnis in H heißt: gehalten oder nicht gehalten?
-Wer hält, steht. Wer nicht hält, fällt — und D dreht ihn.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>H — STATION</b><div class="txt">Diese Datei ist ein eigener Index.
+
+<div style="border:1px solid #f0d080;padding:14px;border-radius:12px;margin-bottom:14px">
+<b style="color:#f0d080">PIPELINE ORGANIZER — O</b><br><small>Ein Ding rein → durchschieben → Finale. Zwischendurch Mi Ka Do.</small><br><br>
+<input id="pipeIn" placeholder="Was soll durch die Pipeline? z.B. Fall 43, Zeugnis, Idee..." style="width:100%;background:#02060a;border:1px solid #274b57;color:#fff;padding:10px;border-radius:8px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+<button onclick="pipeAdd()">+ IN DIE PIPELINE</button>
+<button class="ghost" onclick="pipeNext()">▶ WEITER SCHIEBEN</button>
+<button class="ghost" onclick="snack()">🍿 MI KA DO</button>
+</div>
+<div id="pipe" style="margin-top:12px;white-space:pre-wrap"></div>
+</div>
+<div id="cards" class="grid mid"><div class="card"><b>O — ORGANIZER</b><div class="txt">O = Orbit + Organizer
+Welle kreist. Organizer ordnet.
+Nicht alles auf einmal. Eine Welle nach der anderen.
+→ NC COMBAT COMMANDOS FINALE KOMPLETTUM WAVE WAVELETTEN</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>O — ORBIT</b><div class="txt">O = Orbit, Welle kreist
+Alles kommt wieder. Alles kreist um HOME 40.
+Wer im Orbit bleibt, verliert sich nicht.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>MI KA DO — DER KLEINE SNACK</b><div class="txt">MI = Mitte · KA = Kaffee · DO = Do / Drehen
+Der kleine Mi Ka Do zwischendurch.
+Ein Snack. Ein Lachen. Kein großes Programm.
+Regel: Wenn du nicht weiter weißt → Mi Ka Do. Snack. Lachen. Weiter.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>MI KA DO — SNACK-LISTE</b><div class="txt">1. Wasser / Kaffee
+2. Ein Bissen — klein, nicht viel
+3. Ein Lachen — laut, echt
+4. Einmal durchatmen
+5. Weiter. Nicht neu anfangen. Weiterkreisen.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>O — WAVE / WAVELETTEN</b><div class="txt">WAVE = große Welle
+WAVELETTEN = kleine Wellen zwischendurch
+Groß ordnet man nicht mit Gewalt. Groß ordnet man mit vielen kleinen Wellen.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>O — FINALE KOMPLETTUM</b><div class="txt">FINALE = zu Ende bringen
+KOMPLETTUM = komplett umrunden
+Nicht halb. Einmal rum. Dann fertig.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>O — NC COMBAT COMMANDOS</b><div class="txt">NC = deine Commandos
+COMMANDOS = Befehle, die stehen
+In O werden Befehle nicht geschrien. Sie werden geordnet.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>O — ZEUGNIS</b><div class="txt">Zeugnis in O heißt: geordnet oder verstreut?
+Wer ordnet, kreist. Wer verstreut, fliegt raus.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>O — STATION</b><div class="txt">Diese Datei ist ein eigener Index.
 Eigenes Ordner-Repo im großen Repo.
-Eigene Station: H. Eigenes Können: Halten + Monitoren.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div></div>
-<div id="mon">MONITOR: Bereit. H = HALT. Monitor hält — nichts läuft durch, ohne gesehen zu werden.</div>
-<div id="out">Alle Karten in dieser Station sind editierbar. Diese Station ist ein eigener Index in einem eigenen Ordner-Repo.</div>
-<footer style="margin-top:16px;color:#8aa;font-size:13px">Zurück: <a href="../sys.zo.om.html">sys.zo.om.html — Zentrale</a> · Bühne: <a href="../B/">B/</a> · Drehen: <a href="../D/">D/</a> · Tafel: <a href="../T/">T/</a> · Zentrale: <a href="../sys/">sys/</a></footer>
+Eigene Station: O. Eigenes Können: Organisieren + Snacken + Lachen.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div></div>
+<div id="snack">MI KA DO: Bereit. Wenn du nicht weiter weißt → Snack. Lachen. Weiter.</div>
+<div id="out">Alle Karten in dieser Station sind editierbar. O ordnet, O kreist, O snackt zwischendurch.</div>
+<footer style="margin-top:16px;color:#8aa;font-size:13px">Zurück: <a href="../sys.zo.om.html">sys.zo.om.html — Zentrale</a> · Bühne: <a href="../B/">B/</a> · Drehen: <a href="../D/">D/</a> · Halt: <a href="../H/">H/</a> · Tafel: <a href="../T/">T/</a></footer>
 <script>
 const KEY='syszoom_'+document.title;
 function load(){try{return JSON.parse(localStorage.getItem(KEY))||null}catch(e){return null}}
@@ -52,7 +68,16 @@ function editCard(b){const c=b.closest('.card');const t=prompt('Name bearbeiten:
 function dupCard(b){const c=b.closest('.card');addCardEl(c.querySelector('b').innerText+' — KOPIE',c.querySelector('.txt').innerText);}
 function delCard(b){if(!confirm('Wirklich löschen?'))return;b.closest('.card').remove();save();}
 function resetAll(){if(!confirm('Alle Änderungen in dieser Station löschen?'))return;localStorage.removeItem(KEY);location.reload();}
-function exportAll(){const d=[...document.querySelectorAll('.card')].map(c=>c.querySelector('b').innerText+'\n'+c.querySelector('.txt').innerText).join('\n\n---\n\n');document.getElementById('out').textContent='EXPORT — Station H:\n\n'+d;}
-function monitor(){const n=document.querySelectorAll('.card').length;document.getElementById('mon').textContent='◉ MONITOR — PRÜFUNG: '+n+' Karten in Station H gesehen. HELL beaufsichtigt HÖLLE — HÖLLE auf Sicht. f(f(x))=f(x). HOME 40. Nichts im Dunkeln. HALT = ZIEL.';}
+function exportAll(){const d=[...document.querySelectorAll('.card')].map(c=>c.querySelector('b').innerText+'\n'+c.querySelector('.txt').innerText).join('\n\n---\n\n');document.getElementById('out').textContent='EXPORT — Station O:\n\n'+d;}
+const snacks=['Mi Ka Do: Kaffee. Ein Bissen. Ein Lachen. Weiter.','Mi Ka Do: Nicht neu anfangen. Weiterkreisen.','Mi Ka Do: Die Welle lacht zurück.','Mi Ka Do: Klein snacken, groß ordnen.','Mi Ka Do: Mitte halten. Kaffee trinken. Do machen.'];
+let si=0; function snack(){document.getElementById('snack').textContent=snacks[si%snacks.length]; si++;}
+function ordnen(){const n=document.querySelectorAll('.card').length;document.getElementById('out').textContent='⟳ ORDNEN — EINE WELLE: '+n+' Karten in O geordnet. Nicht alles auf einmal. Eine Welle. Dann Mi Ka Do. Dann nächste Welle.';}
+
+let pipeItems=[]; let pipeStage=0;
+const STAGES=['1 SEHEN','2 TRENNEN','3 VERDICHTEN','4 BEWERTEN','5 SCHALTEN → FINALE KOMPLETTUM'];
+function pipeRender(){ document.getElementById('pipe').textContent = pipeItems.length? pipeItems.map((it,i)=> (i===pipeItems.length-1?'▶ ':'  ')+it+' — Stufe: '+STAGES[pipeStage]).join('\n') : 'Pipeline leer. Etwas reinlegen.'; }
+function pipeAdd(){ const v=document.getElementById('pipeIn').value.trim(); if(!v) return; pipeItems.push(v); pipeStage=0; document.getElementById('pipeIn').value=''; pipeRender(); document.getElementById('out').textContent='PIPELINE: '+v+' ist drin. Stufe 1 SEHEN.'; }
+function pipeNext(){ if(!pipeItems.length) return; if(pipeStage<4){ pipeStage++; pipeRender(); document.getElementById('out').textContent='PIPELINE: Weitergeschoben → '+STAGES[pipeStage]; } else { const done=pipeItems.pop(); pipeStage=0; pipeRender(); document.getElementById('out').textContent='PIPELINE: FINALE KOMPLETTUM — '+done+' ist durch. Einmal rum. Fertig. Jetzt Mi Ka Do.'; } }
+pipeRender();
 renderStored();
 </script></body></html>
