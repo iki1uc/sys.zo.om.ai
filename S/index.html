@@ -1,1 +1,83 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>S — SONNE · WURZEL · WERT — STATION S</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#02060a;color:#eafcff;font-family:ui-monospace,Menlo,Consolas,monospace;padding:20px}
+h1{color:#ffd84d;letter-spacing:2px;margin:0}.sub{color:#b388ff;margin:6px 0 18px}
+.grid{display:grid;gap:12px}.mid{grid-template-columns:repeat(3,1fr)}.tools{grid-template-columns:1fr 1fr}
+.card{border:1px solid #1e3a44;background:#07131a;padding:14px;border-radius:12px}.card b{color:#ffd84d;font-size:18px}
+.card .txt{margin:8px 0;white-space:pre-wrap}
+.btns{display:flex;gap:6px;flex-wrap:wrap}button{background:#ffd84d;color:#02060a;border:0;padding:8px 10px;border-radius:8px;font-weight:800;cursor:pointer;font-size:12px}
+button.ghost{background:transparent;color:#ffd84d;border:1px solid #ffd84d}
+input{width:100%;background:#02060a;border:1px solid #274b57;color:#fff;padding:8px;border-radius:8px;margin-top:6px}
+#out{border:1px dashed #ffd84d;padding:14px;border-radius:12px;margin-top:14px;white-space:pre-wrap;min-height:60px}
+a{color:#ffd84d}small{color:#9ad} label{font-size:12px;color:#9ad}
+@media(max-width:700px){.mid,.tools{grid-template-columns:1fr}}
+</style></head><body>
+<h1>S — SONNE · WURZEL · WERT</h1><div class="sub">S = Sonne, Wurzel braucht Licht · Wurzel Core Scale Sonne Mond Fixed · Werkstatt, nicht Museum</div>
+
+<div class="grid tools" style="margin-bottom:14px">
+<div class="card"><b>🔧 WURZEL-RECHNER — f(x)=min(x,40)</b>
+<label>Wert x <input id="wx" type="number" value="729"></label>
+<button onclick="wurzelCalc()">▶ WURZELN</button><div id="wout" style="margin-top:8px;white-space:pre-wrap"></div></div>
+<div class="card"><b>🔧 HBT-RECHNER — H · B · T → Q → F → D</b>
+<label>H = HALT <input id="h" type="number" value="40"></label>
+<label>B = BASIS <input id="b" type="number" value="30"></label>
+<label>T = TIEFE <input id="t" type="number" value="20"></label>
+<button onclick="hbtCalc()">▶ RECHNEN</button><div id="hout" style="margin-top:8px;white-space:pre-wrap"></div></div>
+<div class="card"><b>🔧 WERT-ARBEIT — BEWERTEN + UMWERTEN</b>
+<label>Was? <input id="wertName" placeholder="z.B. Idee, Fall, Zeugnis"></label>
+<label>Wert 0-100 <input id="wertZahl" type="number" value="85"></label>
+<div style="display:flex;gap:6px;margin-top:8px"><button onclick="bewerten()">▶ BEWERTEN</button><button class="ghost" onclick="umwerten()">↻ UMWERTEN</button></div><div id="wertOut" style="margin-top:8px;white-space:pre-wrap"></div></div>
+<div class="card"><b>☀️ SONNE / 🌙 MOND</b>
+<small>Sonne sieht. Mond prüft nachts, was Sonne übersehen hat.<br>Beide zusammen = ganzer Wert.</small><br><br>
+<button onclick="sonne()">☀️ SONNE: ZEIGEN</button> <button class="ghost" onclick="mond()">🌙 MOND: NACHT-PRÜFUNG</button><div id="smOut" style="margin-top:8px;white-space:pre-wrap"></div></div>
+</div>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+<button onclick="addCard()">+ NEUEN EINTRAG ADDEN</button>
+<button class="ghost" onclick="resetAll()">↺ ALLES ZURÜCKSETZEN</button>
+<button class="ghost" onclick="exportAll()">↓ ALLES ALS TEXT</button>
+</div>
+<div id="cards" class="grid mid"><div class="card"><b>S — SONNE</b><div class="txt">S = Sonne, Wurzel braucht Licht
+Ohne Licht keine Wurzel. Ohne Wurzel kein Wert.
+→ Wurzel Core Scale Sonne Mond Fixed</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>S — WURZEL</b><div class="txt">Wurzel Core: f(x)=min(x,40) · f(f(x))=f(x) · HOME 40
+3 HELL beaufsichtigt 8 HÖLLE.
+Aus allen das BESTE — aus Besten das ALLERBESTE.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>S — SCALE</b><div class="txt">SCALE: 1 → 3 → 9 → 40
+Klein messen, groß halten.
+Scale heißt: nicht größer lügen, sondern genauer messen.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>S — MOND</b><div class="txt">MOND: Nacht-Wert
+Was bei Sonne gilt, gilt bei Mond anders.
+Mond prüft, was Sonne übersehen hat.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>S — FIXED</b><div class="txt">FIXED: Was steht, steht.
+HOME 40 ist fixed. f(f(x))=f(x) ist fixed.
+Alles andere ist editierbar.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>S — WERT</b><div class="txt">WERT: Was ist das wert?
+Nicht Gefühl. Messung.
+HBT → Q → F → D → WERT</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>S — UMWERT</b><div class="txt">UMWERT: Feld 9x9 ZENTRUM
+Umwerten heißt: denselben Wert neu sehen.
+Nicht löschen. Umwerten.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>S — AGGREGATOR</b><div class="txt">AGGREGATOR: Sammelt alle Werte.
+Aus vielen Werten ein Wert.
+→ S/aggregator.js</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>S — STATION</b><div class="txt">Eigener Index, eigene Station.
+Eigenes Ordner-Repo im großen Repo.
+Eigenes Können: Werten + Umwerten + Rechnen.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div></div>
+<div id="out">Alle Karten in S sind editierbar. S wertet. S umwertet. S rechnet.</div>
+<footer style="margin-top:16px;color:#8aa;font-size:13px">Zurück: <a href="../sys.zo.om.html">sys.zo.om.html — Zentrale</a> · Bühne: <a href="../B/">B/</a> · Drehen: <a href="../D/">D/</a> · Halt: <a href="../H/">H/</a> · Organizer: <a href="../O/">O/</a> · Tafel: <a href="../T/">T/</a> · Dateien in S: aggregator.js · opta.vector.js · vector.line.js · quant-triangle-analysis.json · continuum-reality.json · s.system · sli.ready</footer>
+<script>
+const KEY='syszoom_'+document.title;
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||null}catch(e){return null}}
+function save(){const d=[...document.querySelectorAll('#cards .card')].map(c=>({t:c.querySelector('b').innerText,x:c.querySelector('.txt').innerText}));localStorage.setItem(KEY,JSON.stringify(d));document.getElementById('out').textContent='Gespeichert im Browser: '+d.length+' Einträge in S.';}
+function renderStored(){const d=load();if(!d)return;const w=document.getElementById('cards');w.innerHTML='';d.forEach(it=>addCardEl(it.t,it.x,false));}
+function addCardEl(t,x,s=true){const w=document.getElementById('cards');const el=document.createElement('div');el.className='card';el.innerHTML='<b></b><div class="txt"></div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div>';el.querySelector('b').innerText=t||'NEU';el.querySelector('.txt').innerText=x||'';w.appendChild(el);if(s)save();}
+function addCard(){const t=prompt('Name / Titel:','NEU');if(t===null)return;const x=prompt('Text dazu:','');addCardEl(t,x||'');}
+function editCard(b){const c=b.closest('.card');const t=prompt('Name bearbeiten:',c.querySelector('b').innerText);if(t===null)return;const x=prompt('Text bearbeiten:',c.querySelector('.txt').innerText);if(x===null)return;c.querySelector('b').innerText=t;c.querySelector('.txt').innerText=x;save();}
+function dupCard(b){const c=b.closest('.card');addCardEl(c.querySelector('b').innerText+' — KOPIE',c.querySelector('.txt').innerText);}
+function delCard(b){if(!confirm('Wirklich löschen?'))return;b.closest('.card').remove();save();}
+function resetAll(){if(!confirm('Alle Änderungen in S löschen?'))return;localStorage.removeItem(KEY);location.reload();}
+function exportAll(){const d=[...document.querySelectorAll('#cards .card')].map(c=>c.querySelector('b').innerText+'\n'+c.querySelector('.txt').innerText).join('\n\n---\n\n');document.getElementById('out').textContent='EXPORT — Station S:\n\n'+d;}
+function wurzelCalc(){const x=Number(document.getElementById('wx').value);const f=Math.min(x,40);document.getElementById('wout').textContent='f('+x+') = '+f+'\nf(f('+x+')) = '+Math.min(f,40)+' — idempotent.\n'+(x>=40?'≥40 → HOME 40 hält.':'<40 → bleibt, wie es ist.');}
+function hbtCalc(){const H=Number(document.getElementById('h').value),B=Number(document.getElementById('b').value),T=Number(document.getElementById('t').value);const Q=(H+B+T)/3,F=Q/40,D=[H,B,T].filter(v=>v!==0).length;document.getElementById('hout').textContent='POOL: H='+H+' B='+B+' T='+T+'\nQ = (H+B+T)/3 = '+Q.toFixed(2)+'\nF = Q/40 = '+F.toFixed(2)+'\nD = '+D+' Ebenen\nWERT = Q = '+Q.toFixed(2);}
+function bewerten(){const n=document.getElementById('wertName').value||'Wert';const z=Number(document.getElementById('wertZahl').value);const f=Math.min(z,40);document.getElementById('wertOut').textContent='BEWERTET: '+n+' = '+z+'\nNach Wurzel: f('+z+') = '+f+'\n'+(z>=40?'HOME 40 — BESTE / ALLERBESTE.':'Unter HOME — bleibt, wird nicht gelöscht.');}
+function umwerten(){const n=document.getElementById('wertName').value||'Wert';const z=Number(document.getElementById('wertZahl').value);document.getElementById('wertOut').textContent='UMGEWERTET: '+n+'\nAlter Wert: '+z+'\nNeuer Blick: Was wäre '+n+', wenn es nicht um Zahl ginge, sondern um Nutzen?\nNicht löschen. Umwerten. Feld 9x9 ZENTRUM.';}
+function sonne(){document.getElementById('smOut').textContent='☀️ SONNE: Zeigen. Was ist da? Nur 4 zeigen. HELL sieht.';}
+function mond(){document.getElementById('smOut').textContent='🌙 MOND: Nacht-Prüfung. Was hat Sonne übersehen?\nMond prüft leise. Wer bei Mond auch steht, steht wirklich.';}
+renderStored();
+</script></body></html>
 
