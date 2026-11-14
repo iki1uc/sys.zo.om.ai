@@ -1,53 +1,70 @@
 <!doctype html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SYS.ZO.OM.HTML — ZENTRALE</title>
+<title>B — BÜHNE · BIO · PUMP.FIRE — STATION B</title>
 <style>
-*{box-sizing:border-box} body{margin:0;background:#02060a;color:#eafcff;font-family:ui-monospace,Menlo,Consolas,monospace;padding:20px}
-h1{color:#5cf0ff;letter-spacing:3px;margin:0} .sub{color:#b388ff;margin:6px 0 18px}
-.grid{display:grid;gap:12px} .top,.bottom{grid-template-columns:repeat(3,1fr)} .mid{grid-template-columns:repeat(3,1fr)}
-.card{border:1px solid #1e3a44;background:#07131a;padding:14px;border-radius:12px} .card b{color:#5cf0ff;font-size:22px}
-.card a{color:#fff;text-decoration:none} .card:hover{border-color:#5cf0ff;box-shadow:0 0 18px #5cf0ff44}
-label{font-size:12px;color:#9ad} input{width:100%;background:#02060a;border:1px solid #274b57;color:#fff;padding:8px;border-radius:8px;margin-top:6px}
-button{width:100%;background:#5cf0ff;color:#02060a;border:0;padding:12px;border-radius:10px;font-weight:800;cursor:pointer}
-button.ghost{background:transparent;color:#5cf0ff;border:1px solid #5cf0ff}
-#out{border:1px dashed #5cf0ff;padding:14px;border-radius:12px;margin-top:14px;min-height:64px;white-space:pre-wrap}
-footer{margin-top:16px;color:#8aa;font-size:13px} a{color:#5cf0ff}
-@media(max-width:700px){.top,.bottom,.mid{grid-template-columns:1fr}}
+*{box-sizing:border-box}body{margin:0;background:#02060a;color:#eafcff;font-family:ui-monospace,Menlo,Consolas,monospace;padding:20px}
+h1{color:#ff8c00;letter-spacing:2px;margin:0}.sub{color:#b388ff;margin:6px 0 18px}
+.grid{display:grid;gap:12px}.mid{grid-template-columns:repeat(3,1fr)}.ctl{grid-template-columns:1fr 1fr}
+.card{border:1px solid #1e3a44;background:#07131a;padding:14px;border-radius:12px}.card b{color:#ff8c00;font-size:18px}
+.card .txt{margin:8px 0;white-space:pre-wrap}
+.btns{display:flex;gap:6px;flex-wrap:wrap}button{background:#ff8c00;color:#02060a;border:0;padding:8px 10px;border-radius:8px;font-weight:800;cursor:pointer;font-size:12px}
+button.ghost{background:transparent;color:#ff8c00;border:1px solid #ff8c00}
+#out,#fire{border:1px dashed #ff8c00;padding:14px;border-radius:12px;margin-top:14px;white-space:pre-wrap;min-height:60px}
+#map{font-family:ui-monospace,monospace;background:#07131a;padding:14px;border-radius:12px;white-space:pre;line-height:1.5;overflow-x:auto}
+a{color:#ff8c00}small{color:#9ad} input{width:100%;background:#02060a;border:1px solid #274b57;color:#fff;padding:8px;border-radius:8px;margin-top:6px}
+@media(max-width:700px){.mid,.ctl{grid-template-columns:1fr}}
 </style></head><body>
-<h1>SYS.ZO.OM.HTML</h1><div class="sub">ZENTRALE · BEFEHL + JUSTIERUNG · Root ja · 9 Namen · 7 Ordner · Plateau: 3 oben, 9 Mitte, 3 unten</div>
+<h1>B — BÜHNE · BIO · PUMP.FIRE</h1><div class="sub">B = Berlin, Bühne, Schraube hält · Bio · Bios · Biosen — unter Kontrolle — pumpen, pipelinen, katapultieren · Koordinaten sind kartographiert</div>
 
-<div class="grid top">
-<div class="card"><b>EINGANG</b><br>MODE / MOVE / AXIOM / VEC aus evo. lesen<br>
-<label>MODE<input id="mode" value="B"></label><label>MOVE<input id="move" value=""></label><label>AXIOM<input id="axiom" value=""></label><label>VEC<input id="vec" value=""></label></div>
-<div class="card"><b>WÄCHTER</b><br>security.zo.om.js daneben, gleiche Regeln, gleiche __EVO_WACHE</div>
-<div class="card"><b>LIZENZ</b><br>NUL außen zu · Discord + Koop + wieimmer innen offen · iki1uc</div>
+<div class="grid ctl" style="margin-bottom:14px">
+<div class="card"><b>🗺️ KARTE — KARTOGRAPHIERT</b><div id="map">   1  2  3  4  5  6  7  8
+A  .  .  .  .  .  .  .  ◆ WURZELGRUND A1-H8 DIAG
+B  .  ▓  .  .  .  .  ▓  .  SCHACHT-40 B2-B7
+C  .  .  ◆  .  .  ◆  .  .  PRISMATIKUM C3-F6
+D  .  .  .  ●  .  .  .  .  RESIDUAL D4 / NULLPUNKT E4 nah
+E  .  .  .  ◆  ★  .  .  .  TIEFGARBE E4-D5 / WERTGRUBE E5
+F  .  .  .  .  .  ◆  .  .
+G  .  .  .  .  .  .  .  .
+H  .  .  .  .  .  .  .  ◆
+★ = 9x9 ZENTRUM — UMWERT</div></div>
+<div class="card"><b>🔥 PUMP.FIRE — KONTROLLE</b><small>Nicht wild pumpen. Unter Kontrolle. Koordinate wählen, dann feuern.<br>729 = Welt. 756+ = Überlauf. Nicht drüber.</small><br><br>
+<label>Was? <input id="bioWhat" placeholder="Bio / Bios / Biosen — z.B. Idee, Wert, Zeugnis"></label>
+<label>Von Feld <input id="bioFrom" placeholder="z.B. E4"></label>
+<label>Nach Feld <input id="bioTo" placeholder="z.B. E5"></label>
+<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button onclick="pumpFire()">🔥 PUMP.FIRE</button><button class="ghost" onclick="pipelineGo()">⟳ PIPELINE</button><button class="ghost" onclick="katapultGo()">🚀 KATAPULT</button></div>
+<div id="fire" style="margin-top:8px;white-space:pre-wrap">PUMP.FIRE bereit. Koordinate kartographiert? Dann feuern.</div></div>
 </div>
 
-<h2 style="color:#b388ff">9 MITTE</h2>
-<div class="grid mid">
-<div class="card"><a href="B/"><b>B</b><br>SCHRAUBE 5 81 8ALL 4ALL BERLIN HH PAULI<br><small>B = Berlin, Bühne, Schraube hält</small></a></div>
-<div class="card"><a href="D/"><b>D</b><br>43 Fall Ori Schein Liebe Hass<br><small>D = Drehen, Fall dreht</small></a></div>
-<div class="card"><a href="D/"><b>D</b><br>Toolomat Neu<br><small>D = Drehen, Tool dreht</small></a></div>
-<div class="card"><a href="H/"><b>H</b><br>MONITOR SAM PRISMATICUM 1 BIO TEL ADD<br><small>H = Halt, Monitor hält</small></a></div>
-<div class="card"><a href="O/"><b>O</b><br>NC COMBAT COMMANDOS FINALE KOMPLETTUM WAVE WAVELETTEN<br><small>O = Orbit, Welle kreist</small></a></div>
-<div class="card"><a href="S/"><b>S</b><br>Wurzel Core Scale Sonne Mond Fixed<br><small>S = Sonne, Wurzel braucht Licht</small></a></div>
-<div class="card"><a href="T/"><b>T</b><br>MAIN MAINBOARD MAIN BAORD GESONDERTES LAYOUT<br><small>T = Tafel, Mainboard wird lesbar</small></a></div>
-<div class="card"><a href="sys/"><b>sys</b><br>NC ZENTRALE COMMANDO EINHEIT REFINAL ONLY ATTACK DEEP<br><small>sys = Zentrale, Befehl</small></a></div>
-<div class="card"><a href="sys/"><b>sys</b><br>Schraube 5 81 Ebene 321 Justierbar<br><small>sys = Zentrale, Justierung</small></a></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+<button onclick="addCard()">+ NEUEN EINTRAG ADDEN</button><button class="ghost" onclick="exportAll()">↓ ALLES ALS TEXT</button>
 </div>
-<p>B=1, D=2, H=1, O=1, S=1, T=1, sys=2</p>
-
-<div class="grid bottom">
-<button onclick="fusion()">Knopf 1: FUSION ANZEIGEN</button>
-<button class="ghost" onclick="station()">Knopf 2: WEITER ZUR STATION — NC[MODE]</button>
-<button class="ghost" onclick="just()">Knopf 3: JUSTIEREN 321</button>
-</div>
-<div id="out">EVO: MODE=B · MOVE= · AXIOM= · VEC= · EBENE=3 · STATION=NC[B]</div>
-<footer>Der user trägt nur Eingang + Wächter + Lizenz-Zeile. Mehr nicht.<br>Bühne: <a href="B/">B/index.html</a> · <a href="stage.zo.om.html">stage.zo.om.html</a> · <a href="bio.tel.html">bio.tel.html</a> · <a href="vol.1.html">vol.1.html</a></footer>
+<div id="cards" class="grid mid"><div class="card" data-feld="E4-D5"><b>TIEFGARBE</b><div class="txt">Feld: E4-D5
+Tun: ernten
+Kartographiert. Unter Kontrolle.</div><div class="btns"><button onclick="pump('TIEFGARBE','E4-D5')">🔥 PUMP</button><button class="ghost" onclick="pipe('TIEFGARBE')">⟳ PIPELINE</button><button class="ghost" onclick="katapult('TIEFGARBE','E4-D5')">🚀 KATAPULT</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-feld="A1-H8 DIAG"><b>WURZELGRUND</b><div class="txt">Feld: A1-H8 DIAG
+Tun: wurzeln
+Kartographiert. Unter Kontrolle.</div><div class="btns"><button onclick="pump('WURZELGRUND','A1-H8 DIAG')">🔥 PUMP</button><button class="ghost" onclick="pipe('WURZELGRUND')">⟳ PIPELINE</button><button class="ghost" onclick="katapult('WURZELGRUND','A1-H8 DIAG')">🚀 KATAPULT</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-feld="C3-F6"><b>PRISMATIKUM</b><div class="txt">Feld: C3-F6
+Tun: brechen
+Kartographiert. Unter Kontrolle.</div><div class="btns"><button onclick="pump('PRISMATIKUM','C3-F6')">🔥 PUMP</button><button class="ghost" onclick="pipe('PRISMATIKUM')">⟳ PIPELINE</button><button class="ghost" onclick="katapult('PRISMATIKUM','C3-F6')">🚀 KATAPULT</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-feld="D4"><b>RESIDUAL</b><div class="txt">Feld: D4
+Tun: resten
+Kartographiert. Unter Kontrolle.</div><div class="btns"><button onclick="pump('RESIDUAL','D4')">🔥 PUMP</button><button class="ghost" onclick="pipe('RESIDUAL')">⟳ PIPELINE</button><button class="ghost" onclick="katapult('RESIDUAL','D4')">🚀 KATAPULT</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-feld="B2-B7"><b>SCHACHT-40</b><div class="txt">Feld: B2-B7
+Tun: schachten
+Kartographiert. Unter Kontrolle.</div><div class="btns"><button onclick="pump('SCHACHT-40','B2-B7')">🔥 PUMP</button><button class="ghost" onclick="pipe('SCHACHT-40')">⟳ PIPELINE</button><button class="ghost" onclick="katapult('SCHACHT-40','B2-B7')">🚀 KATAPULT</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-feld="E5"><b>WERTGRUBE</b><div class="txt">Feld: E5
+Tun: werten
+Kartographiert. Unter Kontrolle.</div><div class="btns"><button onclick="pump('WERTGRUBE','E5')">🔥 PUMP</button><button class="ghost" onclick="pipe('WERTGRUBE')">⟳ PIPELINE</button><button class="ghost" onclick="katapult('WERTGRUBE','E5')">🚀 KATAPULT</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-feld="9x9 ZENTRUM"><b>UMWERT</b><div class="txt">Feld: 9x9 ZENTRUM
+Tun: umwerten
+Kartographiert. Unter Kontrolle.</div><div class="btns"><button onclick="pump('UMWERT','9x9 ZENTRUM')">🔥 PUMP</button><button class="ghost" onclick="pipe('UMWERT')">⟳ PIPELINE</button><button class="ghost" onclick="katapult('UMWERT','9x9 ZENTRUM')">🚀 KATAPULT</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div><div class="card" data-feld="E4"><b>NULLPUNKT</b><div class="txt">Feld: E4
+Tun: nullen + neu
+Kartographiert. Unter Kontrolle.</div><div class="btns"><button onclick="pump('NULLPUNKT','E4')">🔥 PUMP</button><button class="ghost" onclick="pipe('NULLPUNKT')">⟳ PIPELINE</button><button class="ghost" onclick="katapult('NULLPUNKT','E4')">🚀 KATAPULT</button><button class="ghost" onclick="editCard(this)">✎ BEARBEITEN</button></div></div></div>
+<div id="out">Alle Felder sind kartographiert. Alle Karten sind editierbar. Bio unter Kontrolle.</div>
+<footer style="margin-top:16px;color:#8aa;font-size:13px">Zurück: <a href="../sys.zo.om.html">sys.zo.om.html — Zentrale</a> · CTRL: <a href="../sys/">sys/ — CTRL & CTRL.LER</a> · Drehen: <a href="../D/">D/</a> · Halt: <a href="../H/">H/</a> · Organizer: <a href="../O/">O/</a> · Sonne: <a href="../S/">S/</a> · Tafel: <a href="../T/">T/</a></footer>
 <script>
-let ebene=3, modes=["B","D","H","O","S","T","sys"], mi=0;
-function render(t){const m=document.getElementById('mode').value||'B';document.getElementById('out').textContent=t+"\nEVO: MODE="+m+" · MOVE="+document.getElementById('move').value+" · AXIOM="+document.getElementById('axiom').value+" · VEC="+document.getElementById('vec').value+" · EBENE="+ebene+" · STATION=NC["+modes[mi]+"]";}
-function fusion(){render("FUSION: SCHRAUBE hält · FALL dreht · MONITOR hält · WELLE kreist · WURZEL braucht Licht · TAFEL wird lesbar · ZENTRALE befiehlt + justiert");}
-function station(){mi=(mi+1)%modes.length;document.getElementById('mode').value=modes[mi];render("WEITER ZUR STATION: NC["+modes[mi]+"] — klick die Karte "+modes[mi]+" in der Mitte.");}
-function just(){ebene=ebene==1?3:ebene-1;render("JUSTIERUNG: Ebene "+ebene+" von 321");}
+function pump(n,f){document.getElementById('fire').textContent='🔥 PUMP: '+n+' — Feld '+f+'\nPumpen = Druck aufbauen, unter Kontrolle. Nicht wild. Koordinate ist kartographiert.\nVon '+f+' → Richtung ZENTRUM.';}
+function pipe(n){document.getElementById('fire').textContent='⟳ PIPELINE: '+n+'\nPipeline = durchschieben: SEHEN → TRENNEN → VERDICHTEN → BEWERTEN → SCHALTEN.\nBio fließt, nicht springt.';}
+function katapult(n,f){document.getElementById('fire').textContent='🚀 KATAPULT: '+n+' — Feld '+f+'\nKatapult = einmal werfen, weit. Nur wenn Koordinate kartographiert ist. Sonst nicht.\n'+n+' fliegt von '+f+' → 9x9 ZENTRUM → FINALE.';}
+function pumpFire(){const w=document.getElementById('bioWhat').value||'Bio';const a=document.getElementById('bioFrom').value||'?';const b=document.getElementById('bioTo').value||'ZENTRUM';document.getElementById('fire').textContent='🔥 PUMP.FIRE!\n'+w+' — von '+a+' nach '+b+'\n\nFeuer = Druck + Richtung + Kontrolle.\nKoordinaten kartographiert: '+a+' → '+b+'.\nWelt: 729. Überlauf: 756+. Wir bleiben in der Welt.\n\nBio · Bios · Biosen — unter Kontrolle gepumpt.';}
+function pipelineGo(){const w=document.getElementById('bioWhat').value||'Bio';document.getElementById('fire').textContent='⟳ PIPELINE: '+w+' fließt durch die Pipeline.\nNicht schießen. Fließen lassen. O ordnet, B pumpt.';}
+function katapultGo(){const w=document.getElementById('bioWhat').value||'Bio';const b=document.getElementById('bioTo').value||'ZENTRUM';document.getElementById('fire').textContent='🚀 KATAPULT: '+w+' → '+b+'!\nEinmal werfen. Weit. Gezielt. Weil kartographiert.';}
+function addCard(){const t=prompt('Neues Feld / Bio:','NEU');if(t===null)return;const x=prompt('Feld + Tun:','Feld: \nTun: ');const w=document.getElementById('cards');const el=document.createElement('div');el.className='card';el.innerHTML='<b></b><div class="txt"></div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button></div>';el.querySelector('b').innerText=t;el.querySelector('.txt').innerText=x||'';w.appendChild(el);}
+function editCard(b){const c=b.closest('.card');const t=prompt('Name bearbeiten:',c.querySelector('b').innerText);if(t===null)return;const x=prompt('Text bearbeiten:',c.querySelector('.txt').innerText);if(x===null)return;c.querySelector('b').innerText=t;c.querySelector('.txt').innerText=x;}
+function exportAll(){const d=[...document.querySelectorAll('#cards .card')].map(c=>c.querySelector('b').innerText+'\n'+c.querySelector('.txt').innerText).join('\n\n---\n\n');document.getElementById('out').textContent='EXPORT — Station B / PUMP.FIRE:\n\n'+d;}
 </script></body></html>
