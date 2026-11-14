@@ -1,1 +1,54 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>D — DREHEN · Fall + Toolomat</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#02060a;color:#eafcff;font-family:ui-monospace,Menlo,Consolas,monospace;padding:20px}
+h1{color:#5cf0ff;letter-spacing:2px;margin:0}.sub{color:#b388ff;margin:6px 0 18px}
+.grid{display:grid;gap:12px}.top,.bottom{grid-template-columns:repeat(3,1fr)}.mid{grid-template-columns:repeat(2,1fr)}
+.card{border:1px solid #1e3a44;background:#07131a;padding:16px;border-radius:12px}.card b{color:#5cf0ff;font-size:20px}
+button{width:100%;background:#5cf0ff;color:#02060a;border:0;padding:12px;border-radius:10px;font-weight:800;cursor:pointer}
+button.ghost{background:transparent;color:#5cf0ff;border:1px solid #5cf0ff}
+#out{border:1px dashed #5cf0ff;padding:14px;border-radius:12px;margin-top:14px;white-space:pre-wrap;min-height:120px}
+a{color:#5cf0ff}small{color:#9ad}
+@media(max-width:700px){.top,.bottom,.mid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>D — DREHEN</h1><div class="sub">D = Drehen · 2x D in 7 Ordnern · Plateau: 3 oben, 9 Mitte, 3 unten — hier in D: 3 oben, 2 Mitte, 3 unten + Wurzel</div>
+
+<div class="grid top">
+<div class="card"><b>▲ DREIECK SCHAUT</b><br>SAM prüft als Dreieck-Auge.<br>Gestern: Zeugnis — was ist gefallen?</div>
+<div class="card"><b>● KREIS HÄLT</b><br>BALL rollt als Kreis. HALT = OFFEN bis gemessen.<br>Heute: Zeugnis — was hältst du?</div>
+<div class="card"><b>▭ TOR ÖFFNET</b><br>TOR steht als Rechteck + Bogen.<br>Morgen: wohin drehst du?</div>
+</div>
+
+<h2 style="color:#b388ff">2x D — DIE MITTE</h2>
+<div class="grid mid">
+<div class="card"><b>D — 43 FALL</b><br>Ori · Schein · Liebe · Hass<br><small>D = Drehen, Fall dreht</small><br><br>
+<label>Fall-Eingabe (Zahl, gestern):<br><input id="fall" value="729" style="width:100%;background:#02060a;border:1px solid #274b57;color:#fff;padding:8px;border-radius:8px"></label></div>
+<div class="card"><b>D — TOOLOMAT NEU</b><br>Das Werkzeug, das dreht.<br><small>D = Drehen, Tool dreht</small><br><br>
+H = HALT — Stabilität / ZEN<br>B = BASIS — Mitte / AURA<br>T = TIEFE — Dynamik / MANA<br><br>Q = (H+B+T)/3 · F = Q/40 · D = 3 Ebenen</div>
+</div>
+
+<h2 style="color:#b388ff">WURZEL — 3 HELL + 8 HÖLLE = 11</h2>
+<div class="card">f(x) = min(x, 40) · f(f(x)) = f(x) · HOME 40<br>
+HELL: SEHEN · ZEIGEN (nur 4) · BEAUFSICHTIGEN — HÖLLE auf Sicht, nichts im Dunkeln.<br>
+HÖLLE: TIEFGARBE · WURZELGRUND · PRISMATIKUM · RESIDUAL · SCHACHT-40 · WERTGRUBE · UMWERT · NULLPUNKT</div>
+
+<div class="grid bottom" style="margin-top:14px">
+<button onclick="pent()">PENTAGRAMM: SEHEN → TRENNEN → VERDICHTEN → BEWERTEN → SCHALTEN</button>
+<button class="ghost" onclick="dreh()">DREHEN — FALL → WURZEL → HOME 40</button>
+<button class="ghost" onclick="zeugnis()">ZEUGNIS HEUTE / GESTERN</button>
+</div>
+<div id="out">Bereit. D dreht nicht zum Spaß — D dreht zum Prüfen.</div>
+<footer style="margin-top:16px;color:#8aa;font-size:13px">Zurück: <a href="../sys.zo.om.html">sys.zo.om.html — Zentrale</a> · Bühne: <a href="../B/">B/</a> · Tafel: <a href="../T/">T/</a> · Zentrale: <a href="../sys/">sys/</a></footer>
+<script>
+const HOME=40; const f=x=>Math.min(Number(x)||0,HOME);
+let ebene=3;
+function pent(){ const v=f(document.getElementById('fall').value);
+ document.getElementById('out').textContent =
+ "PENTAGRAMM = SCHALTER, nicht Deko:\n1 SEHEN: Fall = "+document.getElementById('fall').value+"\n2 TRENNEN: BEST / REST — relevant ist, was >= HOME ist\n3 VERDICHTEN: ALLE → TOP3 → BESTE\n4 BEWERTEN: f(Fall) = "+v+" · Grund: HIGHEST_SCORE, Tie-Break PRISMATIKUM\n5 SCHALTEN: BESTER ZUG → HOME 40\n\nErgebnis: Fall "+document.getElementById('fall').value+" → f(f(x)) = "+f(v)+" — idempotent. Geprüft, nicht geglättet."; }
+function dreh(){ ebene=ebene==1?3:ebene-1; const v=f(document.getElementById('fall').value);
+ document.getElementById('out').textContent="DREHEN — Ebene "+ebene+" von 321\nFall dreht → Wurzel fängt → HOME 40 hält.\nFall: "+document.getElementById('fall').value+" → f(x)="+v+" → f(f(x))="+f(v)+"\nDreieck schaut. Kreis hält. Tor öffnet."; }
+function zeugnis(){ const v=f(document.getElementById('fall').value);
+ document.getElementById('out').textContent="ZEUGNIS — GESTERN / HEUTE\nGestern (Fall): Was ist gefallen? 43 Fall — Ori, Schein, Liebe, Hass. Geprüft: f(Fall)="+v+".\nHeute (Toolomat): Was drehst du jetzt damit? HBT: HALT + BASIS + TIEFE → Q → F → D.\nZeugnis heißt hier: nicht Note. Sondern: gesehen, getrennt, verdichtet, bewertet, geschaltet.\nFalschspieler-Test: Wer nur Schein zeigt, fällt bei f(f(x))=f(x) auf. Wer echt ist, bleibt bei HOME 40 stehen."; }
+</script></body></html>
 
