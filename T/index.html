@@ -1,1 +1,76 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>T — TAFEL · MAINBOARD — STATION T</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#02060a;color:#eafcff;font-family:ui-monospace,Menlo,Consolas,monospace;padding:20px}
+h1{color:#fff;letter-spacing:2px;margin:0}.sub{color:#b388ff;margin:6px 0 18px}
+.grid{display:grid;gap:12px}.mid{grid-template-columns:repeat(3,1fr)}
+.stadion{border:2px solid #fff;padding:16px;border-radius:14px;margin-bottom:14px;background:#0a1420}
+.card{border:1px solid #1e3a44;background:#07131a;padding:14px;border-radius:12px}.card b{color:#fff;font-size:18px}
+.card .txt{margin:8px 0;white-space:pre-wrap}
+.btns{display:flex;gap:6px;flex-wrap:wrap}button{background:#fff;color:#02060a;border:0;padding:8px 10px;border-radius:8px;font-weight:800;cursor:pointer;font-size:12px}
+button.ghost{background:transparent;color:#fff;border:1px solid #fff}
+#out,#score{border:1px dashed #fff;padding:14px;border-radius:12px;margin-top:14px;white-space:pre-wrap;min-height:60px}
+a{color:#fff}small{color:#9ad}
+@media(max-width:700px){.mid{grid-template-columns:1fr}}
+</style></head><body>
+<!-- ANFANG — STADIONMÄSSIG — ANPFIFF -->
+<div class="stadion"><h1>🏟️ T — TAFEL · MAINBOARD</h1><div class="sub">T = Tafel, Mainboard wird lesbar · MAIN MAINBOARD MAIN BAORD GESONDERTES LAYOUT · Eigener Index als eigene Station</div>
+<b>ANPFIFF — ANFANG</b><br>Eingang: MODE / MOVE / AXIOM / VEC<br>Alle 8 Module stehen auf dem Platz. Niemand ist noch gerannt. Alle sind da.<br><br>
+<button onclick="anpfiff()">▶ ANPFIFF</button> <button class="ghost" onclick="halbzeit()">⏸ HALBZEIT — MI KA DO</button>
+<div id="score">STAND: 0:0 — Anpfiff steht noch aus. Alle Module auf dem Platz.</div>
+</div>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+<button onclick="addCard()">+ NEUEN EINTRAG ADDEN</button>
+<button class="ghost" onclick="resetAll()">↺ ALLES ZURÜCKSETZEN</button>
+<button class="ghost" onclick="exportAll()">↓ ALLES ALS TEXT</button>
+</div>
+<!-- MITTE — DEIN MAINBOARD, WIE DU ES ENTWORFEN HAST -->
+<div id="cards" class="grid mid"><div class="card"><b>1 — SAM — DREIECK-AUGE</b><div class="txt">SAM prüft als Dreieck-Auge.
+Dreieck schaut.
+Was SAM sieht, wird gezeigt. Was SAM nicht sieht, wird nicht behauptet.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>2 — SHILL — VIERECK</b><div class="txt">SHILL steht als Viereck.
+Stabil. Steht.
+SHILL trägt, was steht.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>3 — DAUMEN — DAUMEN</b><div class="txt">DAUMEN zeigt als Daumen.
+Zeigt. Nicht quatscht.
+Daumen = Richtung.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>4 — BALL — KREIS</b><div class="txt">BALL rollt als Kreis.
+Kreis hält.
+HALT = OFFEN bis gemessen.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>5 — ATLANTIS — STERN</b><div class="txt">ATLANTIS glänzt als Stern.
+Stern = was versunken war, kommt wieder.
+Nicht vergessen. Wieder holen.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>6 — TREND — WELLE</b><div class="txt">TREND läuft als Welle.
+Welle kreist.
+Trend ist keine Mode. Trend ist eine Welle, die bleibt.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>7 — ALGO — SCHALTER</b><div class="txt">ALGO schaltet als Schalter.
+Pentagramm: SEHEN → TRENNEN → VERDICHTEN → BEWERTEN → SCHALTEN.
+Schalter, nicht Deko.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>8 — TOR — RECHTECK + BOGEN</b><div class="txt">TOR steht als Rechteck + Bogen.
+Tor öffnet.
+Wer durchs Tor geht, ist im Spiel.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div><div class="card"><b>TAFEL — GESONDERTES LAYOUT</b><div class="txt">T = Tafel, Mainboard wird lesbar
+MAIN MAINBOARD MAIN BAORD GESONDERTES LAYOUT
+Nicht wie die anderen Stationen. Eigenes Layout. Eigene Tafel.</div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div></div></div>
+
+<!-- ENDE — STADIONMÄSSIG — ABPFIFF -->
+<div class="stadion" style="margin-top:14px"><b>ABPFIFF — ENDE</b><br>
+Finale. Ausgang. Zeugnis.<br>
+Nicht neu anfangen. Runden. Was auf der Tafel steht, steht.<br><br>
+<button onclick="abpfiff()">■ ABPFIFF — FINALE</button> <button class="ghost" onclick="zeugnis()">📋 ZEUGNIS — TAFEL PRÜFEN</button>
+<div id="out">Alle Karten auf dieser Tafel sind editierbar — wie in allen anderen Stationen. Kein Neuzeugen. Nur Abrunden.</div>
+</div>
+<footer style="margin-top:16px;color:#8aa;font-size:13px">Zurück: <a href="../sys.zo.om.html">sys.zo.om.html — Zentrale</a> · Bühne: <a href="../B/">B/</a> · Drehen: <a href="../D/">D/</a> · Halt: <a href="../H/">H/</a> · Organizer: <a href="../O/">O/</a> · Sonne: <a href="../S/">S/</a> · Zentrale: <a href="../sys/">sys/</a></footer>
+<script>
+const KEY='syszoom_'+document.title;
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||null}catch(e){return null}}
+function save(){const d=[...document.querySelectorAll('#cards .card')].map(c=>({t:c.querySelector('b').innerText,x:c.querySelector('.txt').innerText}));localStorage.setItem(KEY,JSON.stringify(d));document.getElementById('out').textContent='Gespeichert im Browser: '+d.length+' Einträge auf der Tafel.';}
+function renderStored(){const d=load();if(!d)return;const w=document.getElementById('cards');w.innerHTML='';d.forEach(it=>addCardEl(it.t,it.x,false));}
+function addCardEl(t,x,s=true){const w=document.getElementById('cards');const el=document.createElement('div');el.className='card';el.innerHTML='<b></b><div class="txt"></div><div class="btns"><button onclick="editCard(this)">✎ BEARBEITEN</button><button class="ghost" onclick="dupCard(this)">⧉ DUPLIZIEREN</button><button class="ghost" onclick="delCard(this)">✕ LÖSCHEN</button></div>';el.querySelector('b').innerText=t||'NEU';el.querySelector('.txt').innerText=x||'';w.appendChild(el);if(s)save();}
+function addCard(){const t=prompt('Name / Titel:','NEU');if(t===null)return;const x=prompt('Text dazu:','');addCardEl(t,x||'');}
+function editCard(b){const c=b.closest('.card');const t=prompt('Name bearbeiten:',c.querySelector('b').innerText);if(t===null)return;const x=prompt('Text bearbeiten:',c.querySelector('.txt').innerText);if(x===null)return;c.querySelector('b').innerText=t;c.querySelector('.txt').innerText=x;save();}
+function dupCard(b){const c=b.closest('.card');addCardEl(c.querySelector('b').innerText+' — KOPIE',c.querySelector('.txt').innerText);}
+function delCard(b){if(!confirm('Wirklich löschen?'))return;b.closest('.card').remove();save();}
+function resetAll(){if(!confirm('Alle Änderungen auf der Tafel löschen?'))return;localStorage.removeItem(KEY);location.reload();}
+function exportAll(){const d=[...document.querySelectorAll('#cards .card')].map(c=>c.querySelector('b').innerText+'\n'+c.querySelector('.txt').innerText).join('\n\n---\n\n');document.getElementById('out').textContent='EXPORT — Tafel T:\n\n'+d;}
+function anpfiff(){document.getElementById('score').textContent='▶ ANPFIFF — Spiel läuft. Alle 8 Module auf dem Platz: SAM · SHILL · DAUMEN · BALL · ATLANTIS · TREND · ALGO · TOR. STAND: 0:0 — Tafel ist lesbar.';}
+function halbzeit(){document.getElementById('score').textContent='⏸ HALBZEIT — MI KA DO. Snack. Lachen. Weiter. Kein neues Spiel. Dasselbe Spiel, zweite Hälfte.';}
+function abpfiff(){const n=document.querySelectorAll('#cards .card').length;document.getElementById('out').textContent='■ ABPFIFF — FINALE KOMPLETTUM. '+n+' Karten auf der Tafel. Einmal rum. Fertig. Ausgang: Zentrale sys.zo.om.html.';}
+function zeugnis(){document.getElementById('out').textContent='📋 ZEUGNIS — TAFEL PRÜFEN: Dreieck schaut? Kreis hält? Tor öffnet? Wenn ja: Tafel ist lesbar. Wenn nein: D dreht, H hält, O ordnet, S wertet — dann Tafel nochmal lesen.';}
+renderStored();
+</script></body></html>
 
